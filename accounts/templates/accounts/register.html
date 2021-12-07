@@ -1,0 +1,10 @@
+{% extends 'base2.html' %} {% load crispy_forms_tags %}{% url 'login' as login_url %} {% block title %}Cadastro{% endblock %} {% block content %}
+<h1>Cadastro</h1>
+<form method="post">
+    {% csrf_token %} {{ form|crispy }}
+
+    <span>Já possui conta? <a href="{{ login_url}}">Clique aqui!</a> para entrar.</span><br><br>
+    <button class="btn btn-success" style="font-size: 1.5rem;" type="submit">Cadastrar</button>
+
+</form>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% load static %} {% url 'home' as home_url %} {% url 'contact' as contact_url %} {% url 'products:list' as products_list_url %} {% url 'login' as login_url %} {% url 'register' as register_url %}{% url 'logout' as logout_url %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <section id="header">
+        <div class="header container">
+            <div class="nav-bar">
+                <div class="brand">
+                <a href="{{ home_url}}">
+                        <h1>SP BURGUERS</h1>
+                    </a> 
+                </div>
+                <div class="nav-list">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="{{ home_url}}" data-after="Home">Inicio</a></li>
+                        {% if not user.is_authenticated %}
+                    <li class="{% if request.path == products_list_url %} active {% endif %}"><a class="nav-link" href="{% url 'register'%}">Produtos</a></li>{% endif %}
+                        <li><a href="{{ home_url}}" data-after="Contact">Contatos</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{logout_url}}">Sair</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item {% if request.path == login_url %} active {% endif %}">
+                            <a class="nav-link" href="{{ login_url }}">Entrar</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item {% if request.path == cart_url %} active {% endif %}">
+                            <a class="nav-link" href="{{ cart_url }}">
+                              {{ request.session.cart_items }}<i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main class="container pad">
+        {% block content %} {% endblock %}
+    </main>
+    <!-- Footer -->
+    <section id="footer">
+        <div class="footer container">
+            <div class="brand">
+            </div>
+            <h2>Informações Extras</h2>
+            <div class="social-icon">
+                <div class="social-item">
+                    <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/facebook-new.png" /></a>
+                </div>
+                <div class="social-item">
+                    <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" /></a>
+                </div>
+                <div class="social-item">
+                    <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/twitter.png" /></a>
+                </div>
+
+            </div>
+            <div class="text-center copy">
+                © 2021 Copyright: SPBurguer.com
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+
+</html>

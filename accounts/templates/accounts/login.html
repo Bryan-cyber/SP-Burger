@@ -1,0 +1,11 @@
+{% extends 'base2.html' %} {% load crispy_forms_tags %}{% url 'register' as register_url %} {% block title %}Entrar{% endblock %} {% block content %}
+<h1>Entrar</h1>
+<main class='test'>
+    <form method="post">
+        {% csrf_token %} {{ form|crispy }}
+        <span>Não possui conta? <a href="{{ register_url}}">Clique Aqui!</a> para se cadastrar</span><br><br>
+        <button class="btn btn-success" style="font-size: 1.5rem;" type="submit">Entrar</button>
+
+    </form>
+</main>
+{% endblock %}
